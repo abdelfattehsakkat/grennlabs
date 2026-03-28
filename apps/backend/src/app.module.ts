@@ -1,0 +1,23 @@
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { QuizModule } from './quiz/quiz.module';
+import { LabModule } from './lab/lab.module';
+import { EvaluationModule } from './evaluation/evaluation.module';
+import { ActionPlanModule } from './action-plan/action-plan.module';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/greenit'),
+    AuthModule,
+    UsersModule,
+    QuizModule,
+    LabModule,
+    EvaluationModule,
+    ActionPlanModule,
+  ],
+})
+export class AppModule {}

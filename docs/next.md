@@ -1,0 +1,2 @@
+Comment ça fonctionne : au premier démarrage du backend (ou après chaque restart), seedAdmin() est appelé dans main.ts. Il vérifie si l'email admin existe déjà dans MongoDB — si non, il crée le compte.
+Il faut supprimer le seedAdmin(), le user se crée par script

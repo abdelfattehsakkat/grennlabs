@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    --color-forest: #166534;
+    --color-slate: #0f172a;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-slate-700 hover:border-green-500 text-slate-300 hover:text-white font-medium px-6 py-3 rounded-xl transition-all duration-200;
+  }
+
+  .card {
+    @apply bg-slate-900 border border-slate-800 rounded-2xl p-6;
+  }
+
+  .card-hover {
+    @apply card hover:border-green-800 hover:bg-slate-800 transition-all duration-200 cursor-pointer;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full;
+  }
+
+  .badge-green {
+    @apply badge bg-green-950 text-green-400 border border-green-900;
+  }
+
+  .badge-slate {
+    @apply badge bg-slate-800 text-slate-400 border border-slate-700;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-white;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-green-400 to-emerald-300 bg-clip-text text-transparent;
+  }
+
+  /* ── Module content styles ─────────────────────────────── */
+  .module-content h4 {
+    @apply text-white font-semibold text-base mt-6 mb-3;
+  }
+  .module-content p { @apply mb-4 text-base leading-relaxed; }
+  .module-content ul { @apply list-disc list-inside space-y-2 mb-4 text-slate-200; }
+  .module-content ol { @apply list-decimal list-inside space-y-2 mb-4 text-slate-200; }
+  .module-content li { @apply text-base; }
+  .module-content li strong { @apply text-white; }
+  .module-content pre {
+    @apply bg-slate-900 border border-slate-700 rounded-xl p-4 text-sm text-green-300 overflow-x-auto my-4 leading-relaxed;
+  }
+  .module-content code { @apply font-mono text-green-300 text-sm; }
+  .module-content table {
+    @apply w-full text-sm my-5 border-collapse;
+  }
+  .module-content th {
+    @apply text-left text-slate-300 font-semibold border-b border-slate-600 pb-2.5 pr-4 text-xs uppercase tracking-wide;
+  }
+  .module-content td {
+    @apply text-slate-200 border-b border-slate-800 py-2.5 pr-4 align-top text-sm;
+  }
+  .module-content blockquote {
+    @apply border-l-2 border-green-700 pl-4 bg-green-950/20 rounded-r-lg py-3 pr-3 my-4 text-green-200 text-sm;
+  }
+
+  /* ── Stats grid ─────────────────────────────────────────── */
+  .stats-grid {
+    @apply grid grid-cols-2 sm:grid-cols-3 gap-3 my-4;
+  }
+  .stat-card {
+    @apply bg-slate-900 border border-slate-800 rounded-xl p-3 text-center;
+  }
+  .stat-number {
+    @apply text-xl font-black text-green-400 leading-tight;
+  }
+  .stat-label {
+    @apply text-slate-500 text-xs mt-1;
+  }
+  .stat-source {
+    @apply text-slate-600 text-xs font-mono mt-0.5;
+  }
+
+  /* ── Visual flow / schema ───────────────────────────────── */
+  .flow-row {
+    @apply flex items-center gap-2 my-4 flex-wrap;
+  }
+  .flow-box {
+    @apply bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white font-medium flex-shrink-0;
+  }
+  .flow-box-green {
+    @apply bg-green-950 border border-green-800 rounded-xl px-3 py-2 text-sm text-green-300 font-medium flex-shrink-0;
+  }
+  .flow-box-red {
+    @apply bg-red-950 border border-red-900 rounded-xl px-3 py-2 text-sm text-red-300 font-medium flex-shrink-0;
+  }
+  .flow-arrow {
+    @apply text-slate-500 font-bold text-lg flex-shrink-0;
+  }
+  .insight-box {
+    @apply bg-slate-900 border border-slate-700 rounded-xl p-4 my-4;
+  }
+  .insight-box-green {
+    @apply bg-green-950/30 border border-green-900 rounded-xl p-4 my-4;
+  }
+  .insight-box-orange {
+    @apply bg-orange-950/30 border border-orange-900 rounded-xl p-4 my-4;
+  }
+  .bar-chart {
+    @apply space-y-2 my-4;
+  }
+  .bar-row {
+    @apply flex items-center gap-3;
+  }
+  .bar-label {
+    @apply text-slate-400 text-xs w-28 flex-shrink-0 text-right;
+  }
+  .bar-track {
+    @apply flex-1 h-5 bg-slate-900 rounded-full overflow-hidden;
+  }
+  .bar-fill {
+    @apply h-full rounded-full;
+  }
+  .bar-value {
+    @apply text-slate-300 text-xs w-10 flex-shrink-0;
+  }
+}

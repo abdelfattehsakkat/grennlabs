@@ -1,0 +1,21 @@
+# Composition locale — sans nginx (pas de SSL nécessaire)
+# Usage : docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
+version: '3.9'
+
+services:
+  nginx:
+    profiles:
+      - prod   # nginx uniquement en profil prod → ignoré par défaut
+
+  mongodb:
+    ports:
+      - "27022:27017"  # exposé sur le host pour dev local (27017 déjà pris)
+
+  frontend:
+    environment:
+      PORT: "3005"
+      NEXT_PUBLIC_API_URL: "http://localhost:3006"
+
+  backend:
+    environment:
+      FRONTEND_URL: "http://localhost:3005"
