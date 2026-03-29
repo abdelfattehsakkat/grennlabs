@@ -17,7 +17,7 @@ import * as bcrypt from 'bcryptjs';
 // Charge le .env du répertoire où tourne le script (apps/backend/)
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27022/greenit';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://greenit_admin:dev_password@localhost:27022/greenit?authSource=admin';
 
 const UserSchema = new mongoose.Schema(
   {
