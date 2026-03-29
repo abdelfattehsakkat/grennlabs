@@ -9,9 +9,10 @@ services:
       - mongo-data:/data/db
     environment:
       MONGO_INITDB_DATABASE: greenit
+    ports:
+      - "27022:27017"
     networks:
       - greenit-net
-    # Pas d'exposition directe sur l'hôte — accès interne uniquement
 
   backend:
     build:

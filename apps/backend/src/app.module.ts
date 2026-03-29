@@ -11,7 +11,7 @@ import { ActionPlanModule } from './action-plan/action-plan.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27017/greenit'),
+    MongooseModule.forRoot(process.env.MONGO_URI || 'mongodb://localhost:27022/greenit'),
     AuthModule,
     UsersModule,
     QuizModule,
