@@ -1,0 +1,111 @@
+# Configuration Nginx pour Green IT Formation
+# Production-ready avec support HTTP maintenant, HTTPS plus tard
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+  
+  upstream frontend {
+    server frontend:3005;
+  }
+
+  upstream backend {
+    server backend:3006;
+  }
+
+  # ========================================================================
+  # CONFIGURATION HTTP (Port 85) — ACTIF
+  # ========================================================================
+  server {
+    listen 85;
+    server_name _;  # À remplacer par votre domaine/IP quand prêt
+    
+    client_max_body_size 10M;
+    
+    # Certificats Let's Encrypt (pour le renouvellement futur)
+    location /.well-known/acme-challenge/ {
+      root /var/www/certbot;
+    }
+    
+    # API Backend
+    location /api/ {
+      proxy_pass http://backend;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Frontend Next.js
+    location / {
+      proxy_pass http://frontend;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+    }
+  }
+
+  # ========================================================================
+  # CONFIGURATION HTTPS (Port 448) — DÉSACTIVÉE TEMPORAIREMENT
+  # ========================================================================
+  # À activer une fois le domaine configuré et les certificats SSL obtenus
+  #
+  # ÉTAPES POUR ACTIVER HTTPS :
+  # 1. Remplacer YOUR_DOMAIN par votre vrai domaine
+  # 2. Obtenir les certificats SSL : certbot certonly --webroot -w /var/www/certbot -d votre-domaine.com
+  # 3. Décommenter le bloc ci-dessous
+  # 4. Redémarrer nginx : docker compose restart nginx
+  #
+  # server {
+  #   listen 448 ssl;
+  #   http2 on;
+  #   server_name YOUR_DOMAIN;  # Remplacer par votre domaine
+  #
+  #   # Certificats SSL
+  #   ssl_certificate /etc/letsencrypt/live/YOUR_DOMAIN/fullchain.pem;
+  #   ssl_certificate_key /etc/letsencrypt/live/YOUR_DOMAIN/privkey.pem;
+  #   ssl_protocols TLSv1.2 TLSv1.3;
+  #   ssl_ciphers HIGH:!aNULL:!MD5;
+  #   ssl_prefer_server_ciphers on;
+  #
+  #   client_max_body_size 10M;
+  #
+  #   # API Backend
+  #   location /api/ {
+  #     proxy_pass http://backend;
+  #     proxy_http_version 1.1;
+  #     proxy_set_header Upgrade $http_upgrade;
+  #     proxy_set_header Connection 'upgrade';
+  #     proxy_set_header Host $host;
+  #     proxy_set_header X-Real-IP $remote_addr;
+  #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #     proxy_set_header X-Forwarded-Proto https;
+  #     proxy_cache_bypass $http_upgrade;
+  #   }
+  #
+  #   # Frontend Next.js
+  #   location / {
+  #     proxy_pass http://frontend;
+  #     proxy_http_version 1.1;
+  #     proxy_set_header Upgrade $http_upgrade;
+  #     proxy_set_header Connection 'upgrade';
+  #     proxy_set_header Host $host;
+  #     proxy_cache_bypass $http_upgrade;
+  #   }
+  # }
+}

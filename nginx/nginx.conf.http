@@ -1,0 +1,57 @@
+# Configuration Nginx Docker pour Green IT Formation
+# Utilisé uniquement en mode dev/debug
+# En production, le nginx système de la VPS fait le reverse proxy directement vers les ports
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log warn;
+pid /var/run/nginx.pid;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  include /etc/nginx/mime.types;
+  default_type application/octet-stream;
+  
+  upstream frontend {
+    server frontend:3005;
+  }
+
+  upstream backend {
+    server backend:3006;
+  }
+
+  # Configuration HTTP simple (port 85)
+  # Utile pour tester sans passer par le nginx système
+  server {
+    listen 85;
+    server_name _;
+    
+    client_max_body_size 10M;
+    
+    # API Backend
+    location /api/ {
+      proxy_pass http://backend;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_cache_bypass $http_upgrade;
+    }
+    
+    # Frontend Next.js
+    location / {
+      proxy_pass http://frontend;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+    }
+  }
+}

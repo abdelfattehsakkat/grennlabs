@@ -1,0 +1,53 @@
+# Configuration Nginx SYSTÈME pour greenitlabs.tn
+# À placer dans : /etc/nginx/sites-available/greenitlabs.tn
+# 
+# INSTALLATION :
+# 1. Acheter et configurer le domaine greenitlabs.tn (DNS pointant vers 51.178.141.50)
+# 2. Copier ce fichier : sudo cp greenitlabs.tn.template /etc/nginx/sites-available/greenitlabs.tn
+# 3. Activer le site : sudo ln -s /etc/nginx/sites-available/greenitlabs.tn /etc/nginx/sites-enabled/
+# 4. Tester la config : sudo nginx -t
+# 5. Recharger nginx : sudo systemctl reload nginx
+# 6. Obtenir le certificat SSL : sudo certbot --nginx -d greenitlabs.tn -d www.greenitlabs.tn
+#
+# Les conteneurs Docker exposent :
+# - Frontend Next.js : localhost:3005
+# - Backend NestJS : localhost:3006
+
+server {
+    listen 80;
+    server_name greenitlabs.tn www.greenitlabs.tn;
+
+    # Redirection HTTP vers HTTPS (sera ajoutée automatiquement par certbot)
+    # Pour l'instant, on garde HTTP pour tester
+    
+    client_max_body_size 10M;
+
+    # Frontend Next.js (sur port 3005)
+    location / {
+        proxy_pass http://localhost:3005;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    # API Backend NestJS (sur port 3006)
+    location /api/ {
+        proxy_pass http://localhost:3006/api/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# APRÈS INSTALLATION DE CERTBOT, CE FICHIER SERA AUTOMATIQUEMENT MODIFIÉ
+# pour ajouter le bloc HTTPS (listen 443 ssl) comme dans drguedria.tn
