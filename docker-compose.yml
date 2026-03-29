@@ -6,7 +6,7 @@ services:
     container_name: greenit-mongo
     restart: unless-stopped
     volumes:
-      - /var/lib/mongo-greenit:/data/db
+      -  /home/cabinetapp/mongo-data/greenit:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
