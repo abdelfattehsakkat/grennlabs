@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         {/* fb:app_id optionnel - Créez une app Facebook sur developers.facebook.com si nécessaire */}
-        {/* <meta property="fb:app_id" content="VOTRE_FB_APP_ID" /> */}
+        <meta property="fb:app_id" content="4315636788682852" />
       </head>
       <body>
         <AuthProvider>{children}</AuthProvider>
