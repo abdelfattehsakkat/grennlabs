@@ -7,16 +7,17 @@ export const metadata: Metadata = {
   description:
     'Formez vos équipes aux pratiques Green IT et à l\'écoconception numérique. Formation 1 jour, 78 critères RGESN, 3 profils : Dev, QA, Chef de projet.',
   keywords: ['Green IT', 'RGESN', 'écoconception numérique', 'formation ESN', 'numérique responsable'],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:3005'),
+  metadataBase: new URL('https://greenitlabs.tn'),
   openGraph: {
     title: 'Green IT Formation RGESN',
     description: 'La formation Green IT pensée pour les ESN françaises.',
+    url: 'https://greenitlabs.tn',
     locale: 'fr_FR',
     type: 'website',
     siteName: 'Green IT Labs',
     images: [
       {
-        url: '/og-image.jpg', // Image dans /public/og-image.jpg
+        url: 'https://greenitlabs.tn/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Green IT Formation - RGESN & Écoconception',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Green IT Formation RGESN',
     description: 'La formation Green IT pensée pour les ESN françaises.',
-    images: ['/og-image.jpg'],
+    images: ['https://greenitlabs.tn/og-image.png'],
   },
 };
 
