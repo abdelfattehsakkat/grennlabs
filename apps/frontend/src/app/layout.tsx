@@ -35,6 +35,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
+      <head>
+        {/* Meta tags additionnels pour Messenger et partage Facebook */}
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        {/* fb:app_id optionnel - Créez une app Facebook sur developers.facebook.com si nécessaire */}
+        {/* <meta property="fb:app_id" content="VOTRE_FB_APP_ID" /> */}
+      </head>
       <body>
         <AuthProvider>{children}</AuthProvider>
       </body>
