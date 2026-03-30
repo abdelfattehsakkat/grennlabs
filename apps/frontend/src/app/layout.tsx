@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: 'Green IT Labs',
     images: [
       {
-        url: 'https://greenitlabs.tn/og-image.png',
+        url: 'https://greenitlabs.tn/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Green IT Formation - RGESN & Écoconception',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Green IT Formation RGESN',
     description: 'La formation Green IT pensée pour les ESN françaises.',
-    images: ['https://greenitlabs.tn/og-image.png'],
+    images: ['https://greenitlabs.tn/og-image.jpg'],
   },
 };
 
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="fr">
       <head>
         {/* Meta tags additionnels pour Messenger et partage Facebook */}
-        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         {/* fb:app_id optionnel - Créez une app Facebook sur developers.facebook.com si nécessaire */}
