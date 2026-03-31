@@ -7,6 +7,7 @@ import { QuizModule } from './quiz/quiz.module';
 import { LabModule } from './lab/lab.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
 import { ActionPlanModule } from './action-plan/action-plan.module';
+import { ResourcesModule } from './resources/resources.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ActionPlanModule } from './action-plan/action-plan.module';
     LabModule,
     EvaluationModule,
     ActionPlanModule,
+    ResourcesModule,
   ],
 })
 export class AppModule {}

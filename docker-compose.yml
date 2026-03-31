@@ -25,6 +25,9 @@ services:
     env_file: .env
     environment:
       MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb:27017/greenit?authSource=admin
+      RESOURCES_DIR: /app/resources
+    volumes:
+      - ${RESOURCES_HOST_DIR:-./resources}:/app/resources:ro
     ports:
       - "3006:3006"
     depends_on:
