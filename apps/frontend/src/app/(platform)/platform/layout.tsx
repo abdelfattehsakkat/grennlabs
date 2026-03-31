@@ -4,10 +4,9 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth';
-import { api } from '@/lib/api';
 import {
   Leaf, LogOut, LayoutDashboard, BookOpen, Beaker, Target,
-  Star, Zap, Menu, X, FolderOpen, FileDown, ChevronDown,
+  Star, Zap, Menu, X, FolderOpen,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -22,20 +21,13 @@ const NAV_ITEMS = [
   { href: '/platform/plan-action', label: "Plan d'action", icon: Target },
   { href: '/platform/quiz/final', label: 'Quiz final', icon: Zap },
   { href: '/platform/evaluation', label: 'Évaluation', icon: Star },
+  { href: '/platform/resources', label: 'Ressources', icon: FolderOpen },
 ];
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3006';
 
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [resources, setResources] = useState<string[]>([]);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
-
-  useEffect(() => {
-    api.get('/resources').then((data: any) => setResources(data.files || [])).catch(() => {});
-  }, []);
 
   const closeSidebar = () => setSidebarOpen(false);
 
@@ -103,36 +95,6 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
             );
           })}
         </nav>
-
-        {/* Section Ressources */}
-        {resources.length > 0 && (
-          <div className="border-t border-slate-800">
-            <button
-              onClick={() => setResourcesOpen(!resourcesOpen)}
-              className="flex items-center justify-between w-full text-slate-400 hover:text-white text-sm px-4 py-3 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <FolderOpen className="w-4 h-4" />
-                <span>Ressources</span>
-              </div>
-              <ChevronDown className={`w-4 h-4 transition-transform ${resourcesOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {resourcesOpen && (
-              <div className="px-3 pb-2 space-y-0.5">
-                {resources.map((file) => (
-                  <a
-                    key={file}
-                    href={`${API_BASE}/api/resources/download/${encodeURIComponent(file)}`}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
-                  >
-                    <FileDown className="w-4 h-4 flex-shrink-0 text-slate-500" />
-                    <span className="truncate">{file}</span>
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Pied de page utilisateur */}
         <div className="p-4 border-t border-slate-800">
