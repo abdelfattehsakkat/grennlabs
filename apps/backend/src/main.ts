@@ -10,6 +10,9 @@ async function bootstrap() {
   // Security headers
   app.use(helmet());
 
+  // Trust proxy nginx pour lire le vrai IP client (X-Forwarded-For)
+  app.getHttpAdapter().getInstance().set('trust proxy', 1);
+
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
