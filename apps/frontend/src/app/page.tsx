@@ -284,7 +284,7 @@ export default function LandingPage() {
           Contactez-nous pour planifier une session. Délai de traitement : 48h.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="mailto:contact@greenit-formation.fr" className="btn-primary">
+          <a href="mailto:contact@greenitlabs.tn" className="btn-primary">
             Demander un devis <ArrowRight className="w-4 h-4" />
           </a>
           <Link href="/login" className="btn-ghost">
