@@ -28,8 +28,7 @@ services:
       RESOURCES_DIR: /app/resources
     volumes:
       - ${RESOURCES_HOST_DIR:-./resources}:/app/resources:ro
-    ports:
-      - "3006:3006"
+    # Pas de ports exposés : accès uniquement via nginx (réseau interne Docker)
     depends_on:
       - mongodb
     networks:
@@ -44,8 +43,7 @@ services:
     container_name: greenit-frontend
     restart: unless-stopped
     env_file: .env
-    ports:
-      - "3005:3005"
+    # Pas de ports exposés : accès uniquement via nginx (réseau interne Docker)
     networks:
       - greenit-net
 

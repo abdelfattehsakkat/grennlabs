@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "lsof": true,
+        "pgrep": true,
+        "mongosh": true,
+        "pkill": true
+    }
+}

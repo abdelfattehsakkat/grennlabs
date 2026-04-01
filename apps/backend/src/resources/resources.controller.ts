@@ -1,9 +1,11 @@
-import { Controller, Get, Param, Res, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Param, Res, NotFoundException, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
+import { JwtAuthGuard } from '../shared/guards/jwt-auth.guard';
 
 @Controller('resources')
+@UseGuards(JwtAuthGuard)
 export class ResourcesController {
   private getDir(): string {
     return process.env.RESOURCES_DIR || '/app/resources';
